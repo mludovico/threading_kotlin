@@ -10,6 +10,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        button.setOnClickListener {
+            launchAstroTask()
+        }
     }
 
     private fun showData(list: List<AstroPeople>?) {
@@ -23,9 +27,14 @@ class MainActivity : AppCompatActivity() {
         progress_bar.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
+    private fun launchAstroTask() {
+        val task = TaskAstros()
+        task.execute()
+    }
+
     inner class  TaskAstros(): AsyncTask<Void, Int, List<AstroPeople>>() {
 
-        val repository = AstrosRepository()
+        private val repository = AstrosRepository()
 
         override fun onPreExecute() {
             super.onPreExecute()
